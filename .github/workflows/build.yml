@@ -20,8 +20,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
-
       - name: Install Android SDK
         run: |
           SDKMANAGER="$(find "$ANDROID_HOME" -type f -name sdkmanager | head -n 1)"
