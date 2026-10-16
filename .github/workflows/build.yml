@@ -20,10 +20,14 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      -       - name: Install Android SDK
+      - uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK
         run: |
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-35" "build-tools;35.0.0
-        "
+          SDKMANAGER="$(find "$ANDROID_HOME" -type f -name sdkmanager | head -n 1)"
+          test -n "$SDKMANAGER"
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" "platforms;android-35" "build-tools;35.0.0"
+
       - name: Install Gradle
         run: |
           wget -q https://services.gradle.org/distributions/gradle-8.9-bin.zip
@@ -37,4 +41,3 @@ jobs:
           name: GalaxyBot-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-          
